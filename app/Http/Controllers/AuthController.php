@@ -46,4 +46,20 @@ class AuthController extends Controller
             'message' => 'Token successfully revoked'
         ]);
     }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+        ]);
+        $hashed_password = bcrypt($request->password);
+
+        $request->merge(['password' => $hashed_password]);
+
+        $user =  User::create($request->all());
+
+        return response($user);
+    }
 }
