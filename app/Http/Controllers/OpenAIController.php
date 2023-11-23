@@ -29,7 +29,7 @@ class OpenAIController extends Controller
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . env('OPEN_AI_TOKEN'),
-        ])->post('https://api.openai.com/v1/chat/completions', $requestBody);
+        ])->timeout(60)->post('https://api.openai.com/v1/chat/completions', $requestBody);
 
         if ($response->successful()) {
             $responseData = $response->json();
@@ -66,7 +66,7 @@ class OpenAIController extends Controller
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . env('OPEN_AI_TOKEN'),
-        ])->post('https://api.openai.com/v1/chat/completions', $requestBody);
+        ])->timeout(60)->post('https://api.openai.com/v1/chat/completions', $requestBody);
 
         if ($response->successful()) {
             $responseData = $response->json();
@@ -104,7 +104,7 @@ class OpenAIController extends Controller
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . env('OPEN_AI_TOKEN'),
-        ])->post('https://api.openai.com/v1/chat/completions', $requestBody);
+        ])->timeout(60)->post('https://api.openai.com/v1/chat/completions', $requestBody);
 
         if ($response->successful()) {
             $responseData = $response->json();
