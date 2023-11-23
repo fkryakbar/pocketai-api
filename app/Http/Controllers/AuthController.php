@@ -32,10 +32,16 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
+        if ($request->user()) {
+            return response([
+                'status' => 'success',
+                'user_session' => $request->user()
+            ]);
+        }
+
         return response([
-            'status' => 'success',
-            'user_session' => $request->user()
-        ]);
+            'message' => 'unauthenticated',
+        ], 401);
     }
     public function logout(Request $request)
     {
