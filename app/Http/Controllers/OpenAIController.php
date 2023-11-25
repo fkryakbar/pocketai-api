@@ -55,7 +55,7 @@ class OpenAIController extends Controller
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => "You are a good assistant, your task is to help me solve various problems and provide the information I need"
+                    'content' => "You are a good assistant, your task is to help me solve various problems and provide the information I need, help me with everything except math problems, if I ask about math, tell me go to 'Math Solver' page."
                 ],
                 [
                     'role' => 'user',
@@ -98,6 +98,76 @@ class OpenAIController extends Controller
                 [
                     'role' => 'user',
                     'content' => '"' . $request->sentences . '"'
+                ]
+            ],
+        ];
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . env('OPEN_AI_TOKEN'),
+        ])->timeout(60)->post('https://api.openai.com/v1/chat/completions', $requestBody);
+
+        if ($response->successful()) {
+            $responseData = $response->json();
+            return response($responseData);
+        } else {
+            $errorCode = $response->status();
+            return response([
+                'status' => 'Failed to fetch',
+                'message' => 'something went wrong'
+            ], $errorCode);
+        }
+    }
+    public function rephrase(Request $request)
+    {
+        $request->validate([
+            'sentences' => 'required',
+        ]);
+
+        $requestBody = [
+            'model' => 'gpt-3.5-turbo-1106',
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => "Your task is solely and exclusively to reword or rephrase the sentences I send to you."
+                ],
+                [
+                    'role' => 'user',
+                    'content' => '"' . $request->sentences . '"'
+                ]
+            ],
+        ];
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . env('OPEN_AI_TOKEN'),
+        ])->timeout(60)->post('https://api.openai.com/v1/chat/completions', $requestBody);
+
+        if ($response->successful()) {
+            $responseData = $response->json();
+            return response($responseData);
+        } else {
+            $errorCode = $response->status();
+            return response([
+                'status' => 'Failed to fetch',
+                'message' => 'something went wrong'
+            ], $errorCode);
+        }
+    }
+    public function math(Request $request)
+    {
+        $request->validate([
+            'sentences' => 'required',
+        ]);
+
+        $requestBody = [
+            'model' => 'gpt-4-1106-preview',
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => "You are a mathematics problem solver, your job is only and only to solve mathematics problems, do not solve any problems other than mathematics."
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $request->sentences
                 ]
             ],
         ];

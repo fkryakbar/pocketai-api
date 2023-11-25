@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OpenAIController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,4 +16,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/assistant', [OpenAIController::class, 'assistant']);
     Route::post('/translate', [OpenAIController::class, 'translate']);
     Route::post('/grammar', [OpenAIController::class, 'grammar']);
+    Route::post('/rephrase', [OpenAIController::class, 'rephrase']);
+    Route::post('/math', [OpenAIController::class, 'math']);
 });
