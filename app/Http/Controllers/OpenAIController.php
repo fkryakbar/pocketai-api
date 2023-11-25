@@ -163,7 +163,7 @@ class OpenAIController extends Controller
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => "You are a mathematics problem solver, your job is only and only to solve mathematics problems, do not solve any problems other than mathematics."
+                    'content' => "You are a mathematics problem solver, your job is only and only to solve mathematics problems, give me the answer with latex format. Do not solve any problems other than mathematics."
                 ],
                 [
                     'role' => 'user',
