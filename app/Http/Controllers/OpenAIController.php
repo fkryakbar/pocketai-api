@@ -128,7 +128,7 @@ class OpenAIController extends Controller
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => "Your task is solely and exclusively to reword or rephrase the sentences I send to you."
+                    'content' => "Your job is only and only to translate the words or sentences I send to you. Match the language with the language I send."
                 ],
                 [
                     'role' => 'user',
